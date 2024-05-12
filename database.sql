@@ -11,3 +11,38 @@ create TABLE post(
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES person (id)
 );
+
+CREATE TABLE Goods (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT,
+    description TEXT,
+    brand TEXT,
+    price INTEGER,
+    img TEXT UNIQUE,
+    popular INTEGER DEFAULT 0,
+    discount INTEGER DEFAULT 0,
+    count INTEGER DEFAULT 0,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_modified
+BEFORE UPDATE ON Goods
+FOR EACH ROW
+EXECUTE FUNCTION update_modified_column();
+
+CREATE TABLE News (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title TEXT,
+    description TEXT,
+    img TEXT UNIQUE,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
