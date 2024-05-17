@@ -12,18 +12,35 @@ create TABLE post(
     FOREIGN KEY (user_id) REFERENCES person (id)
 );
 
+CREATE TABLE Users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT,
+    surname TEXT,
+    email TEXT UNIQUE,
+    password TEXT
+);
+
 CREATE TABLE Goods (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT,
     description TEXT,
     brand TEXT,
+    category TEXT,
     price INTEGER,
-    img TEXT UNIQUE,
+    img TEXT,
     popular INTEGER DEFAULT 0,
     discount INTEGER DEFAULT 0,
     count INTEGER DEFAULT 0,
     created TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE Posts(
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title TEXT,
+    img TEXT,
+    description TEXT,
+    created TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 CREATE OR REPLACE FUNCTION update_modified_column()

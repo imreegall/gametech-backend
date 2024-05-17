@@ -1,9 +1,11 @@
 import Router from 'express'
 const postRouter = new Router()
 
-import postController from '../controller/post.controller.js'
+import postController from '../controllers/post.controller.js'
 
-postRouter.post('/post', postController.createPost)
-postRouter.get('/post', postController.getPostsByUser)
+postRouter.post('/post', postController.create)
+postRouter.get('/post', postController.get)
+postRouter.delete('/post', postController.remove)
+postRouter.put('/post', postController.update)
 
 export default postRouter
